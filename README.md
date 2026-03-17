@@ -42,3 +42,93 @@ The environment includes:
 ```powershell
 $RGName = "ContosoResourceGroup"
 New-AzResourceGroupDeployment -ResourceGroupName $RGName -TemplateFile backend-centralindia.json -TemplateParameterFile backend-centralindia.parameters.json
+
+
+This deployment creates:
+
+BackendVM1
+
+BackendVM2
+
+Network interfaces for both VMs
+
+Supporting resources in Central India
+
+Task 2 — Install IIS on BackendVM1
+Invoke-AzVMRunCommand -ResourceGroupName 'ContosoResourceGroup' -Name 'BackendVM1' -CommandId 'RunPowerShellScript' -ScriptPath 'install-iis-centralindia.ps1'
+
+Task 3 — Install IIS on BackendVM2
+Invoke-AzVMRunCommand -ResourceGroupName 'ContosoResourceGroup' -Name 'BackendVM2' -CommandId 'RunPowerShellScript' -ScriptPath 'install-iis-centralindia.ps1'
+
+The script installs IIS and customizes the default page so each server displays its own VM name.
+
+Task 4 — Validate Backend Health
+
+In Azure Portal:
+
+Open ContosoAppGateway
+
+Go to Backend health
+
+Confirm both backend servers are marked Healthy
+
+Verify that the probe receives HTTP 200 status code
+
+Expected healthy backend IPs:
+
+10.0.1.4
+
+10.0.1.5
+
+Task 5 — Test Through the Application Gateway Public IP
+
+Open the Application Gateway public IP in the browser:
+
+http://20.219.244.30
+
+Refresh multiple times to confirm responses from:
+
+BackendVM1
+
+BackendVM2
+
+This verifies that the Application Gateway is successfully routing traffic to both backend servers.
+
+📸 Screenshots
+All Resources
+
+Application Gateway Backend Health
+
+Browser Test — BackendVM1
+
+Browser Test — BackendVM2
+
+✅ Validation Results
+
+Both backend VMs deployed successfully
+
+IIS installed and running on both servers
+
+Azure Application Gateway backend health shows both servers as Healthy
+
+Health probe returned 200 OK
+
+Browser testing confirmed successful routing to both backend servers
+
+🔧 Technologies Used
+
+Azure Application Gateway
+
+Azure Virtual Network
+
+Azure Virtual Machines
+
+ARM Templates
+
+PowerShell (Az Module)
+
+IIS
+
+👤 Author
+
+Mina Gaballa
